@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:practice_4/pages/home_page.dart';
 import 'package:practice_4/pages/favorites_page.dart';
 import 'package:practice_4/pages/profile_page.dart';
+import 'package:practice_4/model/flowers.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,12 +34,27 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
+  final List<Flowers> _favorites = [];
 
-  final List<Widget> _pages = [
-    const HomePage(),
-    const FavoritesPage(),
-    const ProfilePage(),
-  ];
+  final List<Widget> _pages = [];
+
+  @override
+  void initState() {
+    _pages.addAll([
+      HomePage(
+        onAddToFavorites: (flower) {
+          setState(() {
+            if (!_favorites.contains(flower)) {
+              _favorites.add(flower);
+            }
+          });
+        },
+      ),
+      FavoritesPage(favorites: _favorites),
+      const ProfilePage(),
+    ]);
+    super.initState();
+  }
 
   void _onItemTapped(int index) {
     setState(() {

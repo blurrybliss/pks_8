@@ -3,8 +3,15 @@ import 'package:practice_4/model/flowers.dart';
 
 class ItemNote extends StatelessWidget {
   final Flowers flowers;
+  final VoidCallback onMoreDetails;
+  final VoidCallback onAddToFavorites;
 
-  const ItemNote({super.key, required this.flowers});
+  const ItemNote({
+    super.key,
+    required this.flowers,
+    required this.onMoreDetails,
+    required this.onAddToFavorites,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +32,7 @@ class ItemNote extends StatelessWidget {
                 Text(
                   flowers.title,
                   style: const TextStyle(
-                    fontSize: 12, // Уменьшен шрифт
+                    fontSize: 12,
                     fontWeight: FontWeight.bold,
                   ),
                   maxLines: 1,
@@ -35,30 +42,32 @@ class ItemNote extends StatelessWidget {
                 Text(
                   flowers.description,
                   style: const TextStyle(
-                    fontSize: 10, // Уменьшен шрифт
+                    fontSize: 10,
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 10),
+                Text(
+                  '${flowers.cost} ₽',
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Flexible(
-                      child: Text(
-                        '${flowers.cost} ₽',
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                    IconButton(
+                      icon: const Icon(Icons.favorite_border),
+                      onPressed: onAddToFavorites,
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: onMoreDetails,
                       child: const Text(
                         'Подробнее',
-                        style: TextStyle(fontSize: 10), // Уменьшен шрифт
+                        style: TextStyle(fontSize: 10),
                       ),
                     ),
                   ],
