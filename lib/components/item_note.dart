@@ -1,63 +1,73 @@
 import 'package:flutter/material.dart';
 import 'package:practice_4/model/flowers.dart';
-import 'package:practice_4/pages/catalog_page.dart';
 
 class ItemNote extends StatelessWidget {
-  const ItemNote({super.key, required this.flowers});
-
   final Flowers flowers;
+
+  const ItemNote({super.key, required this.flowers});
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => CatalogPage(flowers: flowers,)),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Stack(children: [
-            Container(
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: NetworkImage(flowers.imageUrl), fit: BoxFit.cover),
-                  borderRadius: BorderRadius.circular(16.0)),
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.4,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16.0),
-                color: Colors.black.withOpacity(0.5),
-              ),
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.4,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
-                    flowers.title,
-                    style: const TextStyle(fontSize: 55, color: Colors.white, fontWeight: FontWeight.bold, fontFamily: "Serif" ),
+    return Card(
+      elevation: 2,
+      child: Column(
+        children: [
+          Image.network(
+            flowers.imageUrl,
+            height: 100,
+            fit: BoxFit.cover,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  flowers.title,
+                  style: const TextStyle(
+                    fontSize: 12, // Уменьшен шрифт
+                    fontWeight: FontWeight.bold,
                   ),
-                  OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                        side: const BorderSide(color: Colors.green, width: 3)
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  flowers.description,
+                  style: const TextStyle(
+                    fontSize: 10, // Уменьшен шрифт
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        '${flowers.cost} ₽',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => CatalogPage(flowers: flowers,)),
-                      );
-                    },
-                    child: const Text('Описание цветка', style: TextStyle(fontSize: 20, color: Colors.green),),
-                  ),
-                  const SizedBox(height: 50),
-                ],
-              ),
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: const Text(
+                        'Подробнее',
+                        style: TextStyle(fontSize: 10), // Уменьшен шрифт
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ]),
-        ));
+          ),
+        ],
+      ),
+    );
   }
 }
