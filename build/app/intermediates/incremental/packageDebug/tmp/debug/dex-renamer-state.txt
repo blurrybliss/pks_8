@@ -1,4 +1,4 @@
-#Mon Dec 23 00:16:50 MSK 2024
+#Mon Dec 23 05:19:23 MSK 2024
 base.0=/home/maruk/pks_5/build/app/intermediates/dex/debug/mergeExtDexDebug/classes.dex
 base.1=/home/maruk/pks_5/build/app/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
 base.2=/home/maruk/pks_5/build/app/intermediates/dex/debug/mergeProjectDexDebug/1/classes.dex

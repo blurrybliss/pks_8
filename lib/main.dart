@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:practice_4/pages/home_page.dart';
 import 'package:practice_4/pages/favorites_page.dart';
 import 'package:practice_4/pages/profile_page.dart';
+import 'package:practice_4/pages/cart_manager.dart';
+import 'package:practice_4/pages/favorites_manager.dart';
+import 'package:practice_4/pages/profile_manager.dart';
+import 'package:provider/provider.dart';
 import 'package:practice_4/model/flowers.dart';
 
 void main() {
@@ -13,14 +17,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => CartManager()),
+        ChangeNotifierProvider(create: (_) => FavoritesManager()),
+        ChangeNotifierProvider(create: (_) => ProfileManager()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: const MainPage(),
       ),
-      home: const MainPage(),
     );
   }
 }
@@ -36,11 +47,11 @@ class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
   final List<Flowers> _favorites = [];
 
-  final List<Widget> _pages = [];
+  late final List<Widget> _pages;
 
   @override
   void initState() {
-    _pages.addAll([
+    _pages = [
       HomePage(
         onAddToFavorites: (flower) {
           setState(() {
@@ -51,8 +62,8 @@ class _MainPageState extends State<MainPage> {
         },
       ),
       FavoritesPage(favorites: _favorites),
-      const ProfilePage(),
-    ]);
+      ProfilePage(),
+    ];
     super.initState();
   }
 
@@ -65,7 +76,10 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_selectedIndex],
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _pages,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,

@@ -1,71 +1,106 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:practice_4/pages/edit_phone.dart';
+import 'package:practice_4/pages/edit_name.dart';
+import 'package:practice_4/pages/edit_email.dart';
+import 'package:practice_4/user/user_data.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
-
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  _ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  String _name = 'Иван Иванов';
-  String _email = 'ivanov@example.com';
-  String _phone = '123-456-7890';
-
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _nameController.text = _name;
-    _emailController.text = _email;
-    _phoneController.text = _phone;
-  }
-
-  void _saveProfile() {
-    setState(() {
-      _name = _nameController.text;
-      _email = _emailController.text;
-      _phone = _phoneController.text;
-    });
-    Navigator.pop(context);
-  }
-
   @override
   Widget build(BuildContext context) {
+    final user = UserData.myUser;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Профиль')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            CircleAvatar(
-              radius: 50,
-              backgroundImage: NetworkImage('https://via.placeholder.com/150'),
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              controller: _nameController,
-              decoration: const InputDecoration(labelText: 'Имя'),
-            ),
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(labelText: 'Email'),
-            ),
-            TextField(
-              controller: _phoneController,
-              decoration: const InputDecoration(labelText: 'Телефон'),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _saveProfile,
-              child: const Text('Сохранить'),
-            ),
-          ],
-        ),
+      body: Column(
+        children: [
+          AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            toolbarHeight: 10,
+          ),
+          Center(
+              child: Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: Text(
+                    'Изменить профиль',
+                    style: const TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w700,
+                      color: Color.fromARGB(255, 187, 164, 132),
+                    ),
+                  ))),
+          InkWell(
+              onTap: () {
+                // Добавим функциональность для изменения изображения, если потребуется
+              },
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(user.image),
+                radius: 50,
+              )),
+          buildUserInfoDisplay(user.name, 'Имя', const EditNameFormPage()),
+          buildUserInfoDisplay(user.phone, 'Телефон', const EditPhoneFormPage()),
+          buildUserInfoDisplay(user.email, 'Почта', const EditEmailFormPage()),
+        ],
       ),
     );
+  }
+
+  Widget buildUserInfoDisplay(String getValue, String title, Widget editPage) =>
+      Padding(
+          padding: const EdgeInsets.only(bottom: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.grey,
+                ),
+              ),
+              const SizedBox(
+                height: 1,
+              ),
+              Container(
+                  width: 350,
+                  height: 40,
+                  decoration: const BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(
+                            color: Colors.grey,
+                            width: 1,
+                          ))),
+                  child: Row(children: [
+                    Expanded(
+                        child: TextButton(
+                            onPressed: () {
+                              navigateSecondPage(editPage);
+                            },
+                            child: Text(
+                              getValue,
+                              style: const TextStyle(fontSize: 16, height: 1.4),
+                            ))),
+                    const Icon(
+                      Icons.keyboard_arrow_right,
+                      color: Colors.grey,
+                      size: 40.0,
+                    )
+                  ]))
+            ],
+          ));
+
+  FutureOr onGoBack(dynamic value) {
+    setState(() {});
+  }
+
+  void navigateSecondPage(Widget editForm) {
+    Route route = MaterialPageRoute(builder: (context) => editForm);
+    Navigator.push(context, route).then(onGoBack);
   }
 }
