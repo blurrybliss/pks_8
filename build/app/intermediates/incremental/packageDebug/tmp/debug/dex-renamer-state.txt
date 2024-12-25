@@ -1,12 +1,12 @@
-#Mon Dec 23 05:19:23 MSK 2024
-base.0=/home/maruk/pks_5/build/app/intermediates/dex/debug/mergeExtDexDebug/classes.dex
-base.1=/home/maruk/pks_5/build/app/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
-base.2=/home/maruk/pks_5/build/app/intermediates/dex/debug/mergeProjectDexDebug/1/classes.dex
-base.3=/home/maruk/pks_5/build/app/intermediates/dex/debug/mergeProjectDexDebug/10/classes.dex
+#Tue Dec 24 00:09:24 MSK 2024
+base.0=C\:\\Users\\Admin\\StudioProjects\\pks_6\\build\\app\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
+base.1=C\:\\Users\\Admin\\StudioProjects\\pks_6\\build\\app\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
+base.2=C\:\\Users\\Admin\\StudioProjects\\pks_6\\build\\app\\intermediates\\dex\\debug\\mergeProjectDexDebug\\10\\classes.dex
+base.3=C\:\\Users\\Admin\\StudioProjects\\pks_6\\build\\app\\intermediates\\dex\\debug\\mergeProjectDexDebug\\1\\classes.dex
 path.0=classes.dex
 path.1=0/classes.dex
-path.2=1/classes.dex
-path.3=10/classes.dex
+path.2=10/classes.dex
+path.3=1/classes.dex
 renamed.0=classes.dex
 renamed.1=classes2.dex
 renamed.2=classes3.dex
